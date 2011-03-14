@@ -12,5 +12,5 @@ handlers:
   static_files: static/assets/\1
   upload: static/assets/(.*\.(gif|png|jpg|js|css))
 
-- url: /ajax/.*
+- url: /(ajax|oauth_callback).*?
   script: main.py
