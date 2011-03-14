@@ -5,7 +5,16 @@ from google.appengine.ext.webapp import util
 
 class AJAXHandler(webapp.RequestHandler):
   def post(self):
-    self.response.out.write( 'true' )
+    sess  = sessions.Session()
+    
+    if sess[ 'username' ]:
+      # ok so they're authed
+      o = True
+      
+    else:
+      o = False
+      
+    self.respose.out.write( o )
 
 class OAuthHandler(webapp.RequestHandler):
   def get(self):
