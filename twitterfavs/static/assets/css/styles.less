@@ -27,9 +27,9 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 	background: linear-gradient(@colour_from, @colour_to);
 	filter: e('progid:DXImageTransform.Microsoft.gradient(startColorStr=')@colour_from e(', EndColorStr=')@colour_to e(')');
 }
-.shadow(@colour:#000000)
+.shadow(@colour:#000000, @dir:1px, @blur:0px)
 {
-	text-shadow: 0px 1px 0px @colour;
+	text-shadow: @dir @dir @blur @colour;
 	filter: e('Shadow(Color=')@colour e(', Direction=')@dir e(', Strength=')@blur e(')');
 }
 .sprite
@@ -122,7 +122,7 @@ html
 {
 	margin: 0;
 	padding: 0;
-	background: #f1ede5;
+	background: #dddddd;
 }
 a,
 body,
@@ -164,7 +164,7 @@ h1,
 h2,
 h3
 {
-	font-family: "Rolina", Arial, sans-serif;
+	font-family: "Kreon", Arial, sans-serif;
 	line-height: normal;
 }
 h1
@@ -204,6 +204,27 @@ p:first-child
 }
 
 /* Structure */
+#container
+{
+	header
+	{
+		.relative;
+		width: auto;
+		padding: 10px;
+		.gradient(#0080FF, #0C56EF);
+	}
+	h1,
+	h2
+	{
+		color: #ffffff;
+		.shadow;
+		margin: 0;
+	}
+	h2
+	{
+		font-size: 12pt;
+	}
+}
 #loader
 {
 	.absolute;
