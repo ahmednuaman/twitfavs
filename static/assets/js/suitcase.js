@@ -8,8 +8,35 @@ var S = {
 	{
 		$.postJSON( { method: 'check_auth' }, function(d)
 		{
+			console.log( d );
+			
+			if ( d )
+			{
+				$( '#unauthed' ).remove();
+			}
+			else
+			{
+				$( '#authed' ).remove();
+				
+				$( '#unauthed button' ).click( S.prepareOAuthKey );
+			}
+			
 			S.hideLoader();
 		});
+	},
+	
+	prepareOAuthKey												: function()
+	{
+		//S.displayLoader();
+		
+		$.postJSON( { method: 'get_oauth_key' }, function(d)
+		{
+			console.log(d);
+			
+			//window.location.href	= d;
+		});
+		
+		return false;
 	},
 	
 	detectBrowser												: function()
@@ -101,8 +128,6 @@ var S = {
 
 $.postJSON = function(data, callback)
 {
-	$.ajaxSetup( { cache: false } );
-	
 	$.post( '/ajax', data, callback, 'json' );
 };
 
