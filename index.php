@@ -16,6 +16,7 @@
 				</header>
 				<div id="favs">
 					<article>
+						<span class="right">&#9758;</span>
 						<h3></h3>
 						<ul>
 							<li>

@@ -54,7 +54,7 @@ var S = {
 						
 						$( 'a', li ).attr( 'href', this ).text( this.toString() );
 						
-						$( 'ul', a ).append( li );
+						$( 'ul', a ).append( li ).hide();
 					});
 					
 					a.appendTo( '#favs' );
