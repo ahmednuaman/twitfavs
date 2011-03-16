@@ -1,4 +1,6 @@
 var S = {
+	tweetToLinks												: { },
+	
 	ready														: function()
 	{
 		S.checkAuth();
@@ -33,7 +35,32 @@ var S = {
 		{
 			if ( d )
 			{
+				var t	= $( '#favs article' ).remove();
+				var a;
+				var l;
 				
+				$.each( d, function()
+				{
+					a	= t.clone();
+					l	= $( 'li', a ).remove();
+					
+					S.tweetToLinks[ this.id ]	= [ ];
+					
+					$( 'h3', a ).html( S.prepareLinks( this.text, this.id ) );
+					
+					$.each( S.tweetToLinks[ this.id ], function()
+					{
+						var li	= l.clone();
+						
+						$( 'a', li ).attr( 'href', this ).text( this.toString() );
+						
+						$( 'ul', a ).append( li );
+					});
+					
+					a.appendTo( '#favs' );
+				});
+				
+				S.handleExternalLinks();
 			}
 			else
 			{
@@ -41,6 +68,35 @@ var S = {
 			}
 			
 			S.hideLoader();
+		});
+	},
+	
+	prepareLinks												: function(t, i)
+	{
+		t	= t.replace( /&/gim, '&amp;' ).replace( /</gim, '&lt;' ).replace( />/gim, '&gt;' ).replace( /'/gim, '&quot;' ).replace( /'/gim, '&#039;' ); // stolen from: http://stackoverflow.com/questions/1787322/htmlspecialchars-equivalent-in-javascript
+		
+		t	= t.replace( /((https?:\/\/|www\.)[^\s]+)/gim, function(m)
+		{
+			var l	= ( m.indexOf( 'http' ) === -1 ? 'http://' : '' ) + m;
+			
+			S.tweetToLinks[ i ].push( l );
+			
+			return '<a href="' + l + '" class="external">' + m + '</a>';
+		});
+		
+		t	= t.replace( /\s(\@[^\s]+)\s?/gim, ' <a href="http://twitter.com/$1" class="external">$1</a> ' );
+		t	= t.replace( /\s(\#[^\s]+)\s?/gim, ' <a href="http://twitter.com/search?q=$1" class="external">$1</a> ' );
+		
+		return t;
+	},
+	
+	handleExternalLinks											: function()
+	{
+		$( 'a.external' ).click( function()
+		{
+			window.open( $( this ).attr( 'href' ) );
+			
+			return false;
 		});
 	},
 	

@@ -102,6 +102,9 @@ legend {
 .caps {
   text-transform: uppercase;
 }
+.center {
+  margin: 0 auto;
+}
 .georgia {
   font-family: Georgia, Times, serif;
 }
@@ -205,7 +208,10 @@ a:hover, a:active {
 em {
   color: #999999;
 }
-h1, h2, h3 {
+h1,
+h2,
+h3,
+.h3 {
   font-family: "Kreon", Arial, sans-serif;
   line-height: normal;
 }
@@ -215,7 +221,7 @@ h1 {
 h2 {
   font-size: 18pt;
 }
-h3 {
+h3, .h3 {
   font-size: 16pt;
 }
 input, textarea {
@@ -258,6 +264,61 @@ p:first-child {
 }
 #container h2 {
   font-size: 12pt;
+}
+#container #favs {
+  display: block;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: 20px;
+  background: #ffffff;
+  border: 1px solid #aaaaaa;
+  -webkit-box-shadow: 0 0 5px #bbbbbb;
+  -moz-box-shadow: 0 0 5px #bbbbbb;
+  box-shadow: 0 0 5px #bbbbbb;
+  behavior: url(/assets/css/ie-css3.htc);
+  /* Download from: http://fetchak.com/ie-css3/ */
+
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  behavior: url(/assets/css/ie-css3.htc);
+  /* Download from: http://fetchak.com/ie-css3/ */
+
+}
+#container #favs article {
+  display: block;
+  position: relative;
+  padding: 10px;
+  border-top: 1px solid #aaaaaa;
+  background: #ffffff;
+  background: -moz-linear-gradient(top, #ffffff, #eeeeee);
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#eeeeee));
+  background: -webkit-linear-gradient(#ffffff, #eeeeee);
+  background: linear-gradient(#ffffff, #eeeeee);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr= #ffffff , EndColorStr= #eeeeee );
+}
+#container #favs article h3 a {
+  font-family: "Kreon", Arial, sans-serif;
+  line-height: normal;
+  font-size: 16pt;
+}
+#container #favs article:first-child {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  -moz-border-radius-topright: 10px;
+  -moz-border-radius-topleft: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-top-left-radius: 10px;
+  border: none;
+}
+#container #favs article:last-child {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
 }
 #loader {
   display: block;
