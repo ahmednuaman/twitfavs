@@ -9,12 +9,11 @@
 	</head>
 	<body>
 		<div id="container">
-			<header>
-				<h1>Twitter Favs</h1>
-				<h2>Aggregating your Twitter favourites since 2011.</h2>
-			</header>
 			<div id="authed">
-				
+				<header>
+					<h1><span id="username"></span>'s favs</h1>
+					<h2>Powered by Twitfavs &mdash; Aggregating your Twitter favourites since 2011</h2>
+				</header>
 			</div>
 			<div id="unauthed" class="center">
 				<h1>Hello there!</h1>
@@ -24,7 +23,9 @@
 				</button>
 				<hr />
 				<h3>So what's happening here exactly?</h3>
-				
+				<p>Well I'm glad you asked. Twitfavs is a small and simple aggregator for all your twitter favourite needs. If you're like me, you have lots and lots of favourites that you don't have time to read through. So, much like an RSS reader, this little app displays your favourites in a nice and simple manner and preloads previews of the links (if any) contained within those tweets.</p>
+				<h3>How does one use it?</h3>
+				<p>Well one needs to have a twitter account (if one hasn't got one, please visit: <a href="http://twitter.com/">http://twitter.com/</a> and sort one self out). Once one is on twitter, come back here (here being <a href="http://twitfavs.fsmg.co.uk/">http://twitfavs.fsmg.co.uk/</a>) and authorise one's arse. Then one'll be in twitter favourites heaven.</p>
 			</div>
 		</div>
 		<div id="loader"></div>

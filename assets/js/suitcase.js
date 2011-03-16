@@ -6,13 +6,15 @@ var S = {
 	
 	checkAuth													: function()
 	{
-		$.postJSON( { method: 'check_auth' }, function(d)
+		$.getJSON( '/backend.php', { method: 'check_auth' }, function(d)
 		{
-			console.log( d );
-			
 			if ( d )
 			{
 				$( '#unauthed' ).remove();
+				
+				$( '#username' ).text( d.screen_name );
+				
+				
 			}
 			else
 			{
@@ -27,13 +29,11 @@ var S = {
 	
 	prepareOAuthKey												: function()
 	{
-		//S.displayLoader();
+		S.displayLoader();
 		
-		$.postJSON( { method: 'get_oauth_key' }, function(d)
+		$.getJSON( '/backend.php', { method: 'get_oauth_key' }, function(d)
 		{
-			console.log(d);
-			
-			//window.location.href	= d;
+			window.location.href	= d;
 		});
 		
 		return false;
@@ -124,11 +124,6 @@ var S = {
 	{
 		$( '#loader' ).stop( true ).fadeOut();
 	}
-};
-
-$.postJSON = function(data, callback)
-{
-	$.post( '/ajax', data, callback, 'json' );
 };
 
 $( document ).ready( S.ready );

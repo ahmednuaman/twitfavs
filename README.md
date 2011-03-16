@@ -7,3 +7,9 @@ How does one use it?
 ====================
 
 Well one needs to have a twitter account (if one hasn't got one, please visit: [http://twitter.com/](http://twitter.com/) and sort one self out). Once one is on twitter, visit the app at: [http://twitfavs.fsmg.co.uk/](http://twitfavs.fsmg.co.uk/) and authorise one's arse. Then one'll be in twitter favourites heaven.
+
+Credits
+=======
+
+*	[Ahmed Nuaman](http://ahmednuaman.com) (that's me by the way) for building it (a-thank you)
+*	[EpiTwitter](https://github.com/jmathai/twitter-async) for the awesome OAuth lib
