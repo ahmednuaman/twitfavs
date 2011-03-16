@@ -23,6 +23,9 @@
 								<a></a>
 							</li>
 						</ul>
+						<iframe></iframe>
+						<span class="right controls">&#9758;</span>
+						<span class="left controls">&#9756;</span>
 					</article>
 				</div>
 			</div>
@@ -40,7 +43,8 @@
 			</div>
 		</div>
 		<div id="loader"></div>
-		<script src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
 		<script src="/assets/js/suitcase.js"></script>
 		<script>
 		<!--

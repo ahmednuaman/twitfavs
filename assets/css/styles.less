@@ -156,8 +156,8 @@ a:visited
 a:hover,
 a:active
 {
-	color: #5a911c;
-	border-bottom: 1px solid #5a911c;
+	color: #0C56EF;
+	border-bottom: 1px solid #0C56EF;
 	text-decoration: none;
 }
 em
@@ -248,7 +248,8 @@ p:first-child
 			border-top: 1px solid #aaaaaa;
 			.gradient(#ffffff,#eeeeee);
 			
-			span.right
+			span.right,
+			span.left
 			{
 				.h3;
 				padding: 5px 4px 0 6px;
@@ -257,6 +258,15 @@ p:first-child
 				.gradient(#0080FF,#0C56EF);
 				.corners(20px);
 				cursor: pointer;
+			}
+			span.left
+			{
+				padding: 5px 6px 0 4px;
+			}
+			span.right:hover,
+			span.left:hover
+			{
+				.gradient(#333333,#000000);
 			}
 			h3
 			{
@@ -268,10 +278,32 @@ p:first-child
 					.h3;
 				}
 			}
-			
 			ul
 			{
+				.hide;
+			}
+			iframe
+			{
+				.relative;
 				margin-top: 20px;
+				width: 100%;
+				min-height: 200px;
+				border: 1px solid #cccccc;
+				background: url(../image/ajax-loader.gif) no-repeat center center #ffffff;
+				.hide;
+			}
+			.controls
+			{
+				.absolute;
+				.hide;
+				top: 50%;
+				border: 5px solid #f8f8f8;
+				left: 0;
+			}
+			.controls.right
+			{
+				right: 0;
+				left: auto;
 			}
 		}
 		article:first-child
@@ -298,9 +330,20 @@ p:first-child
 		{
 			.gradient(#eeeeee,#ffffff);
 			
-			span.right
+			span.right:first-child
 			{
 				.gradient(#333333,#000000);
+			}
+		}
+		article:target
+		{
+			background: #f8f8f8;
+			
+			iframe,
+			.controls
+			{
+				display: block;
+				visibility: visible;
 			}
 		}
 	}

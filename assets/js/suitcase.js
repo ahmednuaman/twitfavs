@@ -48,19 +48,45 @@ var S = {
 					
 					$( 'h3', a ).html( S.prepareLinks( this.text, this.id ) );
 					
-					$.each( S.tweetToLinks[ this.id ], function()
+					if ( S.tweetToLinks[ this.id ].length > 0 )
 					{
-						var li	= l.clone();
+						$.each( S.tweetToLinks[ this.id ], function()
+						{
+							var li	= l.clone();
+
+							$( 'a', li ).attr( 'href', this ).text( this.toString() );
+
+							$( 'ul', a ).append( li );
+						});
 						
-						$( 'a', li ).attr( 'href', this ).text( this.toString() );
+						if ( S.tweetToLinks[ this.id ].length == 1 )
+						{
+							$( '.controls', a ).remove();
+						}
+					}
+					else
+					{
+						$( 'iframe, .controls', a ).remove();
+					}
+					
+					a.attr( 'id', this.id ).click( function()
+					{
+						window.location.hash	= this.id;
 						
-						$( 'ul', a ).append( li ).hide();
+						$( 'iframe', this ).attr( 'src', $( 'li:first a', this ).attr( 'href' ) ).load( function()
+						{
+							S.resizeIframes( true );
+						});
 					});
 					
 					a.appendTo( '#favs' );
 				});
 				
 				S.handleExternalLinks();
+				
+				$( 'article[id=' + window.location.hash.replace( '#', '' ) + ']' ).click();
+				
+				$( window ).resize( S.resizeIframes );
 			}
 			else
 			{
@@ -69,6 +95,23 @@ var S = {
 			
 			S.hideLoader();
 		});
+	},
+	
+	resizeIframes												: function()
+	{
+		var i 	= $( 'iframe:visible' );
+		var h	= $( window ).height() - i.position().top - ( parseInt( i.parents( 'article' ).eq( 0 ).css( 'padding-bottom' ) ) * 3 );
+		
+		if ( arguments[ 0 ] !== true )
+		{
+			i.height( h );
+		}
+		else
+		{
+			i.animate({
+				'height'	: h + 'px'
+			}, 'normal', 'easeOutQuint' );
+		}
 	},
 	
 	prepareLinks												: function(t, i)
@@ -84,8 +127,23 @@ var S = {
 			return '<a href="' + l + '" class="external">' + m + '</a>';
 		});
 		
-		t	= t.replace( /\s(\@[^\s]+)\s?/gim, ' <a href="http://twitter.com/$1" class="external">$1</a> ' );
-		t	= t.replace( /\s(\#[^\s]+)\s?/gim, ' <a href="http://twitter.com/search?q=$1" class="external">$1</a> ' );
+		t	= t.replace( /\s(\@[^\s]+)\s?/gim, function(m)
+		{
+			var l	= 'http://twitter.com/' + m;
+			
+			S.tweetToLinks[ i ].push( l );
+			
+			return ' <a href="' + l + '" class="external">' + m + '</a> ';
+		});
+		
+		t	= t.replace( /\s(\#[^\s]+)\s?/gim, function(m)
+		{
+			var l	= 'http://twitter.com/search?q=' + m;
+			
+			S.tweetToLinks[ i ].push( l );
+			
+			return ' <a href="' + l + '" class="external">' + m + '</a> ';
+		});
 		
 		return t;
 	},
