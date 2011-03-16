@@ -50,6 +50,7 @@ h1:first-child,h2:first-child,h3:first-child,p:first-child{margin-top:0;}
 #container #favs article h3{margin:0;cursor:pointer;}#container #favs article h3 a{font-family:"Kreon",Arial,sans-serif;line-height:normal;font-size:16pt;}
 #container #favs article ul{display:none;visibility:hidden;}
 #container #favs article iframe{display:block;position:relative;margin-top:20px;width:100%;min-height:200px;border:1px solid #cccccc;background:url(../image/ajax-loader.gif) no-repeat center center #ffffff;display:none;visibility:hidden;}
+#container #favs article iframe.loaded{background:none;}
 #container #favs article .controls{display:block;position:absolute;display:none;visibility:hidden;top:50%;border:5px solid #f8f8f8;left:0;}
 #container #favs article .controls.right{right:0;left:auto;}
 #container #favs article:first-child{border-top-right-radius:10px;border-top-left-radius:10px;-moz-border-radius-topright:10px;-moz-border-radius-topleft:10px;-webkit-border-top-right-radius:10px;-webkit-border-top-left-radius:10px;border:none;}

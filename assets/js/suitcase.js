@@ -73,8 +73,10 @@ var S = {
 					{
 						window.location.hash	= this.id;
 						
-						$( 'iframe', this ).attr( 'src', $( 'li:first a', this ).attr( 'href' ) ).load( function()
+						$( 'iframe', this ).attr( 'src', $( 'li:first a', this ).attr( 'href' ) ).removeClass( 'loaded' ).load( function()
 						{
+							$( this ).addClass( 'loaded' );
+							
 							S.resizeIframes( true );
 						});
 					});
