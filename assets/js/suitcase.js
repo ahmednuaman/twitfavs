@@ -14,13 +14,30 @@ var S = {
 				
 				$( '#username' ).text( d.screen_name );
 				
-				
+				S.buildList();
 			}
 			else
 			{
 				$( '#authed' ).remove();
 				
 				$( '#unauthed button' ).click( S.prepareOAuthKey );
+				
+				S.hideLoader();
+			}
+		});
+	},
+	
+	buildList													: function()
+	{
+		$.getJSON( '/backend.php', { method: 'get_favs' }, function(d)
+		{
+			if ( d )
+			{
+				
+			}
+			else
+			{
+				window.location.reload();
 			}
 			
 			S.hideLoader();

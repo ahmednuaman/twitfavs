@@ -3,6 +3,8 @@ error_reporting( E_ALL ^ E_NOTICE );
 
 function make_request($url)
 {
+	global $api;
+	
 	try
 	{
 		$r	= $api->get( $url );

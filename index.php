@@ -5,7 +5,7 @@
 		<link type="text/css" rel="stylesheet" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css" />
 		<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Kreon" />
 		<link type="text/css" rel="stylesheet" href="/assets/css/styles.css" />
-		<title></title>
+		<title>Twitfavs &mdash; Aggregating your Twitter favourites since 2011</title>
 	</head>
 	<body>
 		<div id="container">
@@ -14,6 +14,16 @@
 					<h1><span id="username"></span>'s favs</h1>
 					<h2>Powered by Twitfavs &mdash; Aggregating your Twitter favourites since 2011</h2>
 				</header>
+				<div id="favs">
+					<article>
+						<h3></h3>
+						<ul>
+							<li>
+								<a></a>
+							</li>
+						</ul>
+					</article>
+				</div>
 			</div>
 			<div id="unauthed" class="center">
 				<h1>Hello there!</h1>
