@@ -3,7 +3,88 @@ var S = {
 	
 	ready														: function()
 	{
+		S.detectBrowser();
 		S.checkAuth();
+	},
+	
+	detectBrowser												: function()
+	{
+		if ( $.browser.msie )
+		{
+			$( 'html' ).addClass( 'ie' );
+			
+			if ( $.browser.version == '9.0' )
+			{
+				$( 'html' ).addClass( 'ie9' );
+			}
+			else if ( $.browser.version == '8.0' )
+			{
+				$( 'html' ).addClass( 'ie8' );
+			}
+			else if ( $.browser.version == '7.0' )
+			{
+				$( 'html' ).addClass( 'ie7' );
+			} 
+			else
+			{
+				$( 'html' ).addClass( 'ie6' );
+			}
+		}
+
+		if ( $.browser.webkit )
+		{
+			$( 'html' ).addClass( 'webkit' );
+			
+			if ( navigator.userAgent.indexOf( 'Chrome' ) === -1 )
+			{
+				$( 'html' ).addClass( 'safari' );
+			}
+			else
+			{
+				$( 'html' ).addClass( 'chrome' );
+			}
+		}
+
+		if ( $.browser.mozilla )
+		{
+			$( 'html' ).addClass( 'ff' );
+
+			if ( $.browser.version.substr( 0, 3 ) == '1.9' )
+			{
+				$( 'html' ).addClass( 'ff3' );
+			}
+			else if ( $.browser.version == '2.0' )
+			{
+				$( 'html' ).addClass( 'ff4' );
+			}
+			else
+			{
+				$( 'html' ).addClass( 'ff2' );
+			}
+		}
+		
+		if ( $.browser.opera )
+		{
+			$( 'html' ).addClass( 'opera' );
+		}
+
+		if ( navigator.userAgent.indexOf( 'Windows' ) != -1 )
+		{
+			$( 'html' ).addClass( 'windows' );
+		}
+		else if ( navigator.userAgent.indexOf( 'Mac' ) != -1 )
+		{
+			$( 'html' ).addClass( 'mac' );
+		}
+		
+		var input	= document.createElement( 'input' );
+		
+		input.setAttribute( 'type', 'number' );
+		
+		if ( input.type == 'number' )
+		{
+			$( 'html' ).addClass( 'html5' );
+		}
 	},
 	
 	checkAuth													: function()
@@ -36,13 +117,11 @@ var S = {
 			if ( d )
 			{
 				var t	= $( '#favs article' ).remove();
-				var a;
-				var l;
 				
 				$.each( d, function()
 				{
-					a	= t.clone();
-					l	= $( 'li', a ).remove();
+					var a	= t.clone();
+					var l	= $( 'li', a ).remove();
 					
 					S.tweetToLinks[ this.id ]	= [ ];
 					
@@ -63,17 +142,47 @@ var S = {
 						{
 							$( '.controls', a ).remove();
 						}
+						else
+						{
+							$( '.controls', a ).click( function()
+							{
+								var c	= $( 'li a.selected', a );
+								var t	= $( this ).hasClass( 'left' ) ? c.parent().prev().find( 'a' ) : c.parent().next().find( 'a' );
+								
+								if ( t.length == 0 )
+								{
+									t	= $( this ).hasClass( 'left' ) ? $( 'li:last a', a ) : $( 'li:first a', a );
+								}
+								
+								t.click();
+							});
+							
+							$( 'li a', a ).click( function()
+							{
+								$( 'li a', a ).removeClass( 'selected' );
+								
+								$( 'iframe', this ).attr( 'src', $( this ).addClass( 'selected' ).attr( 'href' ) );
+							});
+						}
 					}
 					else
 					{
 						$( 'iframe, .controls', a ).remove();
 					}
 					
+					$( 'iframe, .controls', a ).hide();
+					
 					a.attr( 'id', this.id ).click( function()
 					{
 						window.location.hash	= this.id;
 						
-						$( 'iframe', this ).attr( 'src', $( 'li:first a', this ).attr( 'href' ) ).removeClass( 'loaded' ).load( function()
+						$( 'iframe, .controls', $( 'article' ).not( this ) ).slideUp();
+						
+						$( 'iframe', $( 'article' ).not( this ) ).attr( 'src', '' );
+						
+						$( 'iframe, .controls', this ).slideDown();
+						
+						$( 'iframe', this ).attr( 'src', $( 'li:first a', this ).addClass( 'selected' ).attr( 'href' ) ).removeClass( 'loaded' ).load( function()
 						{
 							$( this ).addClass( 'loaded' );
 							
@@ -131,6 +240,8 @@ var S = {
 		
 		t	= t.replace( /\s(\@[^\s]+)\s?/gim, function(m)
 		{
+			m		= m.replace( /\s/gim, '' );
+			
 			var l	= 'http://twitter.com/' + m;
 			
 			S.tweetToLinks[ i ].push( l );
@@ -140,6 +251,8 @@ var S = {
 		
 		t	= t.replace( /\s(\#[^\s]+)\s?/gim, function(m)
 		{
+			m		= m.replace( /\s/gim, '' );
+			
 			var l	= 'http://twitter.com/search?q=' + m;
 			
 			S.tweetToLinks[ i ].push( l );
