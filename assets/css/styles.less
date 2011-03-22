@@ -126,7 +126,7 @@ html
 {
 	margin: 0;
 	padding: 0;
-	background: #cccccc;
+	background: #eeeeee;
 }
 a,
 body,
@@ -220,8 +220,7 @@ p:first-child
 		.gradient(#0080FF, #0C56EF);
 	}
 	h1,
-	h2,
-	#unauthed h3
+	h2
 	{
 		color: #ffffff;
 		.shadow;
@@ -234,9 +233,9 @@ p:first-child
 	#unauthed
 	{
 		.relative;
-		margin: 15% auto;
+		margin: 5% auto;
 		width: 50%;
-		width: 600px;
+		min-width: 600px;
 		text-align: center;
 		
 		h1,
@@ -249,6 +248,17 @@ p:first-child
 		{
 			font-size: 20pt;
 			line-height: 24pt;
+		}
+		h1,
+		h2,
+		h3
+		{
+			color: #0C56EF;
+			.shadow(#ffffff);
+		}
+		p
+		{
+			.shadow(#ffffff);
 		}
 		button
 		{

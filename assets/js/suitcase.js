@@ -7,86 +7,6 @@ var S = {
 		S.checkAuth();
 	},
 	
-	detectBrowser												: function()
-	{
-		if ( $.browser.msie )
-		{
-			$( 'html' ).addClass( 'ie' );
-			
-			if ( $.browser.version == '9.0' )
-			{
-				$( 'html' ).addClass( 'ie9' );
-			}
-			else if ( $.browser.version == '8.0' )
-			{
-				$( 'html' ).addClass( 'ie8' );
-			}
-			else if ( $.browser.version == '7.0' )
-			{
-				$( 'html' ).addClass( 'ie7' );
-			} 
-			else
-			{
-				$( 'html' ).addClass( 'ie6' );
-			}
-		}
-
-		if ( $.browser.webkit )
-		{
-			$( 'html' ).addClass( 'webkit' );
-			
-			if ( navigator.userAgent.indexOf( 'Chrome' ) === -1 )
-			{
-				$( 'html' ).addClass( 'safari' );
-			}
-			else
-			{
-				$( 'html' ).addClass( 'chrome' );
-			}
-		}
-
-		if ( $.browser.mozilla )
-		{
-			$( 'html' ).addClass( 'ff' );
-
-			if ( $.browser.version.substr( 0, 3 ) == '1.9' )
-			{
-				$( 'html' ).addClass( 'ff3' );
-			}
-			else if ( $.browser.version == '2.0' )
-			{
-				$( 'html' ).addClass( 'ff4' );
-			}
-			else
-			{
-				$( 'html' ).addClass( 'ff2' );
-			}
-		}
-		
-		if ( $.browser.opera )
-		{
-			$( 'html' ).addClass( 'opera' );
-		}
-
-		if ( navigator.userAgent.indexOf( 'Windows' ) != -1 )
-		{
-			$( 'html' ).addClass( 'windows' );
-		}
-		else if ( navigator.userAgent.indexOf( 'Mac' ) != -1 )
-		{
-			$( 'html' ).addClass( 'mac' );
-		}
-		
-		var input	= document.createElement( 'input' );
-		
-		input.setAttribute( 'type', 'number' );
-		
-		if ( input.type == 'number' )
-		{
-			$( 'html' ).addClass( 'html5' );
-		}
-	},
-	
 	checkAuth													: function()
 	{
 		$.getJSON( '/backend.php', { method: 'check_auth' }, function(d)
@@ -122,14 +42,15 @@ var S = {
 				{
 					var a	= t.clone();
 					var l	= $( 'li', a ).remove();
+					var id	= this.id;
 					
-					S.tweetToLinks[ this.id ]	= [ ];
+					S.tweetToLinks[ id ]	= [ ];
 					
-					$( 'h3', a ).html( S.prepareLinks( this.text, this.id ) );
+					$( 'h3', a ).html( S.prepareLinks( this.text, id ) );
 					
-					if ( S.tweetToLinks[ this.id ].length > 0 )
+					if ( S.tweetToLinks[ id ].length > 0 )
 					{
-						$.each( S.tweetToLinks[ this.id ], function()
+						$.each( S.tweetToLinks[ id ], function()
 						{
 							var li	= l.clone();
 
@@ -138,7 +59,7 @@ var S = {
 							$( 'ul', a ).append( li );
 						});
 						
-						if ( S.tweetToLinks[ this.id ].length == 1 )
+						if ( S.tweetToLinks[ id ].length == 1 )
 						{
 							$( '.controls', a ).remove();
 						}
@@ -146,24 +67,33 @@ var S = {
 						{
 							$( '.controls', a ).click( function()
 							{
-								var c	= $( 'li a.selected', a );
+								var c	= $( 'li a.selected', a ).removeClass( 'selected' );
 								var t	= $( this ).hasClass( 'left' ) ? c.parent().prev().find( 'a' ) : c.parent().next().find( 'a' );
+								
+								$( 'li a', a ).removeClass( 'selected' );
 								
 								if ( t.length == 0 )
 								{
 									t	= $( this ).hasClass( 'left' ) ? $( 'li:last a', a ) : $( 'li:first a', a );
 								}
 								
+								if ( t.length !== 1 )
+								{
+									return;
+								}
+								
 								t.click();
 							});
-							
-							$( 'li a', a ).click( function()
-							{
-								$( 'li a', a ).removeClass( 'selected' );
-								
-								$( 'iframe', this ).attr( 'src', $( this ).addClass( 'selected' ).attr( 'href' ) );
-							});
 						}
+						
+						$( 'li a', a ).click( function(e)
+						{
+							$( 'li a', a ).removeClass( 'selected' );
+							
+							$( 'iframe', a ).removeClass( 'loaded' ).attr( 'src', $( this ).addClass( 'selected' ).attr( 'href' ) );
+							
+							return false;
+						});
 					}
 					else
 					{
@@ -172,21 +102,42 @@ var S = {
 					
 					$( 'iframe, .controls', a ).hide();
 					
-					a.attr( 'id', this.id ).click( function()
+					$( 'iframe', a ).load( function()
 					{
-						window.location.hash	= this.id;
+						$( this ).addClass( 'loaded' );
 						
-						$( 'iframe, .controls', $( 'article' ).not( this ) ).slideUp();
-						
-						$( 'iframe', $( 'article' ).not( this ) ).attr( 'src', '' );
-						
-						$( 'iframe, .controls', this ).slideDown();
-						
-						$( 'iframe', this ).attr( 'src', $( 'li:first a', this ).addClass( 'selected' ).attr( 'href' ) ).removeClass( 'loaded' ).load( function()
+						S.resizeIframes( true );
+					});
+					
+					a.attr( 'id', id ).click( function()
+					{
+						$( 'html, body' ).stop( true ).animate({
+							'scrollTop'	: a.offset().top
+						}, 'normal', 'easeOutQuint', function()
 						{
-							$( this ).addClass( 'loaded' );
-							
-							S.resizeIframes( true );
+							//window.location.hash	= id;
+
+							if ( S.tweetToLinks[ id ].length > 0 )
+							{
+								$( 'iframe:visible', $( 'article' ).not( a ) ).attr( 'src', '' );
+
+								$( 'iframe:visible, .controls:visible', $( 'article' ).not( a ) ).stop( true ).slideUp( 'fast' );
+
+								$( 'iframe, .controls', a ).stop( true ).slideDown( 'fast', function()
+								{
+									$( window ).resize();
+									
+									$( 'html, body' ).stop( true ).animate({
+										'scrollTop'	: a.offset().top
+									}, 'normal', 'easeOutQuint' );
+									
+									$( 'li:first a', a ).click();
+								});
+							}
+							else
+							{
+								window.open( 'http://twitter.com/' )
+							}
 						});
 					});
 					
@@ -195,7 +146,7 @@ var S = {
 				
 				S.handleExternalLinks();
 				
-				$( 'article[id=' + window.location.hash.replace( '#', '' ) + ']' ).click();
+				//$( 'article[id=' + window.location.hash.replace( '#', '' ) + ']' ).click();
 				
 				$( window ).resize( S.resizeIframes );
 			}
@@ -211,17 +162,21 @@ var S = {
 	resizeIframes												: function()
 	{
 		var i 	= $( 'iframe:visible' );
-		var h	= $( window ).height() - i.position().top - ( parseInt( i.parents( 'article' ).eq( 0 ).css( 'padding-bottom' ) ) * 3 );
 		
-		if ( arguments[ 0 ] !== true )
+		if ( i.length > 0 )
 		{
-			i.height( h );
-		}
-		else
-		{
-			i.animate({
-				'height'	: h + 'px'
-			}, 'normal', 'easeOutQuint' );
+			var h	= $( window ).height() - i.position().top - ( parseInt( i.parents( 'article' ).eq( 0 ).css( 'padding-bottom' ) ) * 3 );
+
+			if ( arguments[ 0 ] !== true )
+			{
+				i.height( h );
+			}
+			else
+			{
+				i.animate({
+					'height'	: h + 'px'
+				}, 'normal', 'easeOutQuint' );
+			}
 		}
 	},
 	
@@ -244,7 +199,7 @@ var S = {
 			
 			var l	= 'http://twitter.com/' + m;
 			
-			S.tweetToLinks[ i ].push( l );
+			//S.tweetToLinks[ i ].push( l );
 			
 			return ' <a href="' + l + '" class="external">' + m + '</a> ';
 		});
@@ -255,7 +210,7 @@ var S = {
 			
 			var l	= 'http://twitter.com/search?q=' + m;
 			
-			S.tweetToLinks[ i ].push( l );
+			//S.tweetToLinks[ i ].push( l );
 			
 			return ' <a href="' + l + '" class="external">' + m + '</a> ';
 		});
