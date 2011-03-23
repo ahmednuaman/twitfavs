@@ -106,11 +106,13 @@ var S = {
 					{
 						$( this ).addClass( 'loaded' );
 						
-						S.resizeIframes( true );
+						$( window ).resize();
 					});
 					
 					a.attr( 'id', id ).click( function()
 					{
+						$( 'iframe, .controls', $( 'article' ).not( a ) ).stop( true ).hide();
+						
 						$( 'html, body' ).stop( true ).animate({
 							'scrollTop'	: a.offset().top
 						}, 'normal', 'easeOutQuint', function()
@@ -121,15 +123,13 @@ var S = {
 							{
 								$( 'iframe:visible', $( 'article' ).not( a ) ).attr( 'src', '' );
 
-								$( 'iframe:visible, .controls:visible', $( 'article' ).not( a ) ).stop( true ).slideUp( 'fast' );
-
-								$( 'iframe, .controls', a ).stop( true ).slideDown( 'fast', function()
+								$( 'iframe, .controls', a ).stop( true ).slideDown( 'normal', function()
 								{
-									$( window ).resize();
-									
 									$( 'html, body' ).stop( true ).animate({
 										'scrollTop'	: a.offset().top
 									}, 'normal', 'easeOutQuint' );
+									
+									$( window ).resize();
 									
 									$( 'li:first a', a ).click();
 								});
@@ -174,7 +174,7 @@ var S = {
 			else
 			{
 				i.animate({
-					'height'	: h + 'px'
+					'height'		: h + 'px'
 				}, 'normal', 'easeOutQuint' );
 			}
 		}

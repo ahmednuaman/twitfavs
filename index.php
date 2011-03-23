@@ -23,7 +23,6 @@
 								<a></a>
 							</li>
 						</ul>
-						<div class="loader"></div>
 						<iframe></iframe>
 						<span class="right controls">&#9758;</span>
 						<span class="left controls">&#9756;</span>
