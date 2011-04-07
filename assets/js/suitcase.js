@@ -95,54 +95,56 @@ var S = {
 							
 							return false;
 						});
+						
+						$( 'iframe, .controls', a ).hide();
+
+						$( 'iframe', a ).load( function()
+						{
+							$( this ).addClass( 'loaded' );
+
+							$( window ).resize();
+						});
+
+						a.attr( 'id', id ).click( function()
+						{
+							var a	= $( this );
+
+							$( 'iframe, .controls', $( 'article' ).not( a ) ).stop( true ).hide();
+
+							$( 'html, body' ).stop( true ).animate({
+								'scrollTop'	: a.offset().top
+							}, 'normal', 'easeOutQuint', function()
+							{
+								//window.location.hash	= id;
+
+								if ( S.tweetToLinks[ id ].length > 0 )
+								{
+									$( 'iframe:visible', $( 'article' ).not( a ) ).attr( 'src', '' );
+
+									$( 'iframe', a ).stop( true ).slideDown( 'normal', function()
+									{
+										$( 'html, body' ).stop( true ).animate({
+											'scrollTop'	: a.offset().top
+										}, 'normal', 'easeOutQuint' );
+
+										$( window ).resize();
+
+										//$( 'li:first a', a ).click();
+									});
+									
+									$( '.controls', a ).stop( true ).show();
+								}
+								else
+								{
+									window.open( 'http://twitter.com/' + lk );
+								}
+							});
+						});
 					}
 					else
 					{
 						$( 'iframe, .controls', a ).remove();
 					}
-					
-					$( 'iframe, .controls', a ).hide();
-					
-					$( 'iframe', a ).load( function()
-					{
-						$( this ).addClass( 'loaded' );
-						
-						$( window ).resize();
-					});
-					
-					a.attr( 'id', id ).click( function()
-					{
-						var a	= $( this );
-						
-						$( 'iframe, .controls', $( 'article' ).not( a ) ).stop( true ).hide();
-						
-						$( 'html, body' ).stop( true ).animate({
-							'scrollTop'	: a.offset().top
-						}, 'normal', 'easeOutQuint', function()
-						{
-							//window.location.hash	= id;
-
-							if ( S.tweetToLinks[ id ].length > 0 )
-							{
-								$( 'iframe:visible', $( 'article' ).not( a ) ).attr( 'src', '' );
-
-								$( 'iframe, .controls', a ).stop( true ).slideDown( 'normal', function()
-								{
-									$( 'html, body' ).stop( true ).animate({
-										'scrollTop'	: a.offset().top
-									}, 'normal', 'easeOutQuint' );
-									
-									$( window ).resize();
-									
-									$( 'li:first a', a ).click();
-								});
-							}
-							else
-							{
-								window.open( 'http://twitter.com/' + lk );
-							}
-						});
-					});
 					
 					a.appendTo( '#favs' );
 				});
