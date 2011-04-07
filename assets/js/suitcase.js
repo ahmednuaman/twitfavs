@@ -21,7 +21,9 @@ var S = {
 				
 				$( '#username' ).text( d.screen_name );
 				
-				$( '#authed #bottom button' ).click( S.buildList );
+				$( '#authed #bottom button:first' ).click( S.buildList );
+				
+				$( '#authed #bottom button:last' ).hide();
 				
 				S.buildList();
 			}
@@ -38,6 +40,10 @@ var S = {
 	
 	buildList													: function()
 	{
+		$( '#authed #bottom button:first' ).hide();
+		
+		$( '#authed #bottom button:last' ).show();
+		
 		$.getJSON( '/backend.php', { method: 'get_favs', page: ++S.page }, function(d)
 		{
 			if ( d )
@@ -167,6 +173,10 @@ var S = {
 			}
 			
 			S.hideLoader();
+			
+			$( '#authed #bottom button:first' ).show();
+
+			$( '#authed #bottom button:last' ).hide();
 		});
 	},
 	

@@ -30,6 +30,7 @@
 				</div>
 				<div id="bottom">
 					<button>Load some more &raquo;</button>
+					<button>Loading...</button>
 				</div>
 			</div>
 			<div id="unauthed" class="center">
