@@ -66,12 +66,12 @@ var S = {
 						}
 						else
 						{
-							$( '.controls', a ).click( function()
+							$( '.controls', a ).click( function(e)
 							{
-								var c	= $( 'li a.selected', a ).removeClass( 'selected' );
-								var t	= $( this ).hasClass( 'left' ) ? c.parent().prev().find( 'a' ) : c.parent().next().find( 'a' );
+								var c	= $( 'li.selected', a );
+								var t	= $( this ).hasClass( 'left' ) ? c.prev().find( 'a' ) : c.next().find( 'a' );
 								
-								$( 'li a', a ).removeClass( 'selected' );
+								$( 'li', a ).removeClass( 'selected' );
 								
 								if ( t.length == 0 )
 								{
@@ -84,14 +84,18 @@ var S = {
 								}
 								
 								t.click();
+								
+								return false;
 							});
 						}
 						
 						$( 'li a', a ).click( function(e)
 						{
-							$( 'li a', a ).removeClass( 'selected' );
+							$( 'li', a ).removeClass( 'selected' );
 							
-							$( 'iframe', a ).removeClass( 'loaded' ).attr( 'src', $( this ).addClass( 'selected' ).attr( 'href' ) );
+							$( this ).parent().addClass( 'selected' )
+							
+							$( 'iframe', a ).removeClass( 'loaded' ).attr( 'src', $( this ).attr( 'href' ) );
 							
 							return false;
 						});
@@ -107,8 +111,6 @@ var S = {
 
 						a.attr( 'id', id ).click( function()
 						{
-							var a	= $( this );
-
 							$( 'iframe, .controls', $( 'article' ).not( a ) ).stop( true ).hide();
 
 							$( 'html, body' ).stop( true ).animate({
@@ -129,7 +131,7 @@ var S = {
 
 										$( window ).resize();
 
-										//$( 'li:first a', a ).click();
+										$( 'li:first a', a ).click();
 									});
 									
 									$( '.controls', a ).stop( true ).show();
