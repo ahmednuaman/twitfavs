@@ -58,7 +58,7 @@ switch ( $_GET[ 'method' ] )
 	break;
 	
 	case 'get_favs':
-		$r	= make_request( '/favorites.json' );
+		$r	= make_request( '/favorites.json?page=' . $_GET[ 'page' ] );
 		
 	break;
 	

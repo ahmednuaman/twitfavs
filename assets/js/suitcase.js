@@ -1,4 +1,6 @@
 var S = {
+	page														: 0,
+	temp														: null,
 	tweetToLinks												: { },
 	
 	ready														: function()
@@ -13,9 +15,13 @@ var S = {
 		{
 			if ( d )
 			{
+				S.temp	= $( '#favs article' ).remove();
+				
 				$( '#unauthed' ).remove();
 				
 				$( '#username' ).text( d.screen_name );
+				
+				$( '#authed #bottom button' ).click( S.buildList );
 				
 				S.buildList();
 			}
@@ -32,15 +38,13 @@ var S = {
 	
 	buildList													: function()
 	{
-		$.getJSON( '/backend.php', { method: 'get_favs' }, function(d)
+		$.getJSON( '/backend.php', { method: 'get_favs', page: ++S.page }, function(d)
 		{
 			if ( d )
 			{
-				var t	= $( '#favs article' ).remove();
-				
 				$.each( d, function()
 				{
-					var a	= t.clone();
+					var a	= S.temp.clone();
 					var l	= $( 'li', a ).remove();
 					var id	= this.id;
 					var lk	= this.user.screen_name + '/status/' + id;
@@ -159,7 +163,7 @@ var S = {
 			}
 			else
 			{
-				window.location.reload();
+				//window.location.reload();
 			}
 			
 			S.hideLoader();
