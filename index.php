@@ -28,6 +28,9 @@
 						<span class="left controls">&#9756;</span>
 					</article>
 				</div>
+				<div id="bottom">
+					<button>Load some more &raquo;</button>
+				</div>
 			</div>
 			<div id="unauthed" class="center">
 				<h1>Hello there!</h1>
@@ -41,6 +44,12 @@
 				<h3>How does one use it?</h3>
 				<p>Well one needs to have a twitter account (if one hasn't got one, please visit: <a href="http://twitter.com/">http://twitter.com/</a> and sort one self out). Once one is on twitter, come back here (here being <a href="http://twitfavs.fsmg.co.uk/">http://twitfavs.fsmg.co.uk/</a>) and authorise one's arse. Then one'll be in twitter favourites heaven.</p>
 			</div>
+			<footer>
+				<p>
+					Built by <a href="http://ahmednuaman.com/?utm_referrer=twitfavs">Ahmed Nuaman</a> in my little spare time using the awesome <a href="https://github.com/jmathai/twitter-async">epitwitter</a>. 
+					Feel free to fork me at Github: <a href="https://github.com/ahmednuaman/twitfavs">https://github.com/ahmednuaman/twitfavs</a>.
+				</p>
+			</footer>
 		</div>
 		<div id="loader"></div>
 		<script src="/assets/js/jquery.min.js"></script>

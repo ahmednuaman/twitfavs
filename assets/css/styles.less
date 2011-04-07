@@ -226,11 +226,31 @@ p:first-child
 	{
 		color: #ffffff;
 		.shadow;
+	}
+	h1
+	{
 		margin: 0;
 	}
 	h2
 	{
 		font-size: 12pt;
+		margin-bottom: 0;
+	}
+	button
+	{
+		padding: 15px 20px 10px;
+		.corners(10px);
+		.gradient(#0080FF, #0C56EF);
+		border: none;
+		cursor: pointer;
+		font-size: 14pt;
+		.font;
+		color: #ffffff;
+		.shadow(#000000);
+	}
+	button:hover
+	{
+		.gradient(#0C56EF, 0080FF);
 	}
 	#unauthed
 	{
@@ -262,22 +282,6 @@ p:first-child
 		p
 		{
 			.shadow(#ffffff);
-		}
-		button
-		{
-			padding: 15px 20px 10px;
-			.corners(10px);
-			.gradient(#0080FF, #0C56EF);
-			border: none;
-			cursor: pointer;
-			font-size: 14pt;
-			.font;
-			color: #ffffff;
-			.shadow(#000000);
-		}
-		button:hover
-		{
-			.gradient(#0C56EF, 0080FF);
 		}
 		hr
 		{
@@ -372,6 +376,13 @@ p:first-child
 		{
 			background: #f8f8f8;
 		}
+	}
+	footer,
+	#bottom
+	{
+		.relative;
+		margin: 10px auto;
+		text-align: center;
 	}
 }
 #loader
