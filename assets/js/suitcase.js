@@ -112,6 +112,8 @@ var S = {
 					
 					a.attr( 'id', id ).click( function()
 					{
+						var a	= $( this );
+						
 						$( 'iframe, .controls', $( 'article' ).not( a ) ).stop( true ).hide();
 						
 						$( 'html, body' ).stop( true ).animate({
