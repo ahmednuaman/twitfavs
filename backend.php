@@ -25,6 +25,15 @@ include_once( 'epitwitter/EpiTwitter.php' );
 
 include_once( 'config.php' );
 
+/*
+
+The config file contains this:
+
+define( 'TWITTER_CONSUMER_KEY', 		'your key' );
+define( 'TWITTER_CONSUMER_SECRET', 		'your secret' );
+
+*/
+
 $c		= $_COOKIE[ 'twitfavs' ];
 
 if ( $c )
