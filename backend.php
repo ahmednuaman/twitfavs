@@ -23,8 +23,7 @@ include_once( 'epitwitter/EpiCurl.php' );
 include_once( 'epitwitter/EpiOAuth.php' );
 include_once( 'epitwitter/EpiTwitter.php' );
 
-define( 'TWITTER_CONSUMER_KEY', 		'6CbUi0yUqZzJ3FvqeXG2mA' );
-define( 'TWITTER_CONSUMER_SECRET', 		'laRgTcpOkAkf0LNQpziinHkEPkrLL9LsZQ7NQguybc' );
+include_once( 'config.php' );
 
 $c		= $_COOKIE[ 'twitfavs' ];
 
