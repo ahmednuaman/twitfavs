@@ -43,6 +43,7 @@ var S = {
 					var a	= t.clone();
 					var l	= $( 'li', a ).remove();
 					var id	= this.id;
+					var lk	= this.user.screen_name + '/status/' + id;
 					
 					S.tweetToLinks[ id ]	= [ ];
 					
@@ -136,7 +137,7 @@ var S = {
 							}
 							else
 							{
-								window.open( 'http://twitter.com/' )
+								window.open( 'http://twitter.com/' + lk );
 							}
 						});
 					});
