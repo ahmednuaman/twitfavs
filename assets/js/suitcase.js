@@ -2,11 +2,48 @@ var S = {
 	page														: 0,
 	temp														: null,
 	tweetToLinks												: { },
+	vars														: { },
 	
 	ready														: function()
 	{
 		S.detectBrowser();
-		S.checkAuth();
+		S.getURLVars();
+		
+		if ( S.vars[ 'method' ] )
+		{
+			S.getToken();
+		}
+		else
+		{
+			S.checkAuth();
+		}
+	},
+	
+	getToken													: function()
+	{
+		S.displayLoader();
+		
+		$.getJSON( '/backend.php', S.vars, function(d)
+		{
+			window.location.href	= 'http://' + document.domain;
+		});
+	},
+	
+	getURLVars													: function()
+	{
+		var u	= window.location.href.split( '?' );
+		
+		if ( u[ 1 ] )
+		{
+			u	= u[ 1 ].split( '&' );
+			
+			$.each( u, function()
+			{
+				var v				= this.split( '=' );
+				
+				S.vars[ v[ 0 ] ]	= v[ 1 ];
+			});
+		}
 	},
 	
 	checkAuth													: function()

@@ -54,9 +54,7 @@ switch ( $_GET[ 'method' ] )
 		
 		setcookie( 'twitfavs', $c, time() + 31556926 );
 		
-		header( 'Location: /' );
-		
-		exit();
+		$r	= true;
 		
 	break;
 	
