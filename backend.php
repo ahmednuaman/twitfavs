@@ -1,6 +1,4 @@
 <?
-error_reporting( E_ALL ^ E_NOTICE );
-
 function make_request($url)
 {
 	global $api;
@@ -34,14 +32,19 @@ define( 'TWITTER_CONSUMER_SECRET', 		'your secret' );
 
 */
 
-$c		= $_COOKIE[ 'twitfavs' ];
+define( 'COOKIE_NAME',	'twitfavs' );
+
+$c		= $_COOKIE[ COOKIE_NAME ];
 
 if ( $c )
 {
-	$c	= unserialize( $c );
+	$c	= unserialize( stripslashes( $c ) );
+	
+	$t	= $c[ 'token' ];
+	$s	= $c[ 'secret' ];
 }
 
-$api	= new EpiTwitter( TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, $c[ 'token' ], $c[ 'secret' ] );
+$api	= new EpiTwitter( TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, $t, $s );
 
 switch ( $_GET[ 'method' ] )
 {
@@ -52,7 +55,7 @@ switch ( $_GET[ 'method' ] )
 		
 		$c	= serialize( array( 'token' => $t->oauth_token, 'secret' => $t->oauth_token_secret ) );
 		
-		setcookie( 'twitfavs', $c, time() + 31556926 );
+		setcookie( COOKIE_NAME, $c, time() + 31556926 );
 		
 		$r	= true;
 		
@@ -60,6 +63,11 @@ switch ( $_GET[ 'method' ] )
 	
 	case 'check_auth':
 		$r	= make_request( '/account/verify_credentials.json' );
+		
+		if ( !$r )
+		{
+			setcookie( COOKIE_NAME, '', time() - 3600 );
+		}
 		
 	break;
 	
