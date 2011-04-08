@@ -196,7 +196,7 @@ var S = {
 					}
 					else
 					{
-						$( 'iframe, .controls', a ).remove();
+						$( 'iframe, .controls, .right', a ).remove();
 					}
 					
 					a.appendTo( '#favs' );
