@@ -177,14 +177,7 @@ legend {
 body, html {
   margin: 0;
   padding: 0;
-  background: #ffffff;
-  background: -moz-linear-gradient(top, #ffffff, #cccccc);
-  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#cccccc));
-  background: -webkit-linear-gradient(#ffffff, #cccccc);
-  background: linear-gradient(#ffffff, #cccccc);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr= #ffffff , EndColorStr= #cccccc );
-  width: 100%;
-  height: 100%;
+  background: #f8f8f8;
 }
 a,
 body,
@@ -348,7 +341,7 @@ p:first-child {
   display: block;
   position: relative;
   padding: 15px 15px 10px;
-  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
   background: #ffffff;
   background: -moz-linear-gradient(top, #ffffff, #eeeeee);
   background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#eeeeee));
@@ -422,7 +415,10 @@ p:first-child {
   right: 0;
   left: auto;
 }
-#container #favs article:hover, #container #favs article:target {
+#container #favs article:first-child {
+  border-top: 1px solid #aaaaaa;
+}
+#container #favs article:hover, #container #favs article.selected {
   background: #eeeeee;
   background: -moz-linear-gradient(top, #eeeeee, #ffffff);
   background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#ffffff));
@@ -430,7 +426,7 @@ p:first-child {
   background: linear-gradient(#eeeeee, #ffffff);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr= #eeeeee , EndColorStr= #ffffff );
 }
-#container #favs article:hover span.right:first-child, #container #favs article:target span.right:first-child {
+#container #favs article:hover span.right:first-child, #container #favs article.selected span.right:first-child {
   background: #333333;
   background: -moz-linear-gradient(top, #333333, #000000);
   background: -webkit-gradient(linear, left top, left bottom, from(#333333), to(#000000));
@@ -438,7 +434,7 @@ p:first-child {
   background: linear-gradient(#333333, #000000);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr= #333333 , EndColorStr= #000000 );
 }
-#container #favs article:target {
+#container #favs article.selected {
   background: #f8f8f8;
 }
 #container footer, #container #bottom {

@@ -159,7 +159,11 @@ var S = {
 						a.attr( 'id', id ).click( function()
 						{
 							$( 'iframe, .controls', $( 'article' ).not( a ) ).stop( true ).hide();
-
+							
+							$( 'article' ).not( a ).removeClass( 'selected' );
+							
+							$( a ).addClass( 'selected' );
+							
 							$( 'html, body' ).stop( true ).animate({
 								'scrollTop'	: a.offset().top
 							}, 'normal', 'easeOutQuint', function()
