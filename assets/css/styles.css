@@ -447,6 +447,9 @@ p:first-child {
   margin: 10px auto;
   text-align: center;
 }
+#container footer p, #container #bottom p {
+  margin: normal;
+}
 #loader {
   display: block;
   position: absolute;
