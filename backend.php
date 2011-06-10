@@ -1,4 +1,6 @@
 <?
+error_reporting( E_ALL ^ E_NOTICE );
+
 function make_request($url)
 {
 	global $api;
@@ -17,9 +19,9 @@ function make_request($url)
 	return $r;
 }
 
-include_once( 'epitwitter/EpiCurl.php' );
-include_once( 'epitwitter/EpiOAuth.php' );
-include_once( 'epitwitter/EpiTwitter.php' );
+include_once( 'twitter-async/EpiCurl.php' );
+include_once( 'twitter-async/EpiOAuth.php' );
+include_once( 'twitter-async/EpiTwitter.php' );
 
 include_once( 'config.php' );
 
