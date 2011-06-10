@@ -91,7 +91,4 @@ FileETag None
 
 ErrorDocument 404 /index.php?e=404
 
-# CI
-RewriteEngine On
-RewriteCond $1 !^(index\.php|assets|backend.php)
-RewriteRule ^(.*)$ /index.php/$1 [L]
+DirectoryIndex index.php
