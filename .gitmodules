@@ -1,0 +1,3 @@
+[submodule "twitter-async"]
+	path = twitter-async
+	url = ./twitter-async
