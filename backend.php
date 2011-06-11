@@ -44,6 +44,7 @@ if ( $c )
 	
 	$t	= $c[ 'token' ];
 	$s	= $c[ 'secret' ];
+	$u	= $c[ 'user' ];
 }
 
 $api	= new EpiTwitter( TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, $t, $s );
@@ -55,7 +56,7 @@ switch ( $_GET[ 'method' ] )
 		
 		$t	= $api->getAccessToken( array( 'oauth_verifier' => $_GET[ 'oauth_verifier' ] ) );
 		
-		$c	= serialize( array( 'token' => $t->oauth_token, 'secret' => $t->oauth_token_secret ) );
+		$c	= serialize( array( 'token' => $t->oauth_token, 'secret' => $t->oauth_token_secret, 'user' => $t->screen_name ) );
 		
 		setcookie( COOKIE_NAME, $c, time() + 31556926 );
 		
@@ -74,7 +75,7 @@ switch ( $_GET[ 'method' ] )
 	break;
 	
 	case 'get_favs':
-		$r	= make_request( '/favorites.json?page=' . $_GET[ 'page' ] );
+		$r	= make_request( '/favorites.json?id=' . $u . '&page=' . $_GET[ 'page' ] );
 		
 	break;
 	
