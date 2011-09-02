@@ -19,9 +19,7 @@ function make_request($url)
 	return $r;
 }
 
-include_once( 'twitter-async/EpiCurl.php' );
-include_once( 'twitter-async/EpiOAuth.php' );
-include_once( 'twitter-async/EpiTwitter.php' );
+include_once( 'twitteroauth/twitteroauth/twitteroauth.php' );
 
 include_once( 'config.php' );
 
@@ -35,6 +33,7 @@ define( 'TWITTER_CONSUMER_SECRET', 		'your secret' );
 */
 
 define( 'COOKIE_NAME',	'twitfavs' );
+define( 'COOKIE_TIME',	time() + 31556926 );
 
 $c		= $_COOKIE[ COOKIE_NAME ];
 
@@ -47,27 +46,30 @@ if ( $c )
 	$u	= $c[ 'user' ];
 }
 
-$api	= new EpiTwitter( TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, $t, $s );
+if ( $_GET[ 'oauth_token' ] )
+{
+	$t	= $_GET[ 'oauth_token' ];
+}
+
+$api	= new TwitterOAuth( TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, $t, $s );
 
 switch ( $_GET[ 'method' ] )
 {
 	case 'oauth_callback':
-		$api->setToken( $_GET[ 'oauth_token' ] );
+		$t	= $api->getAccessToken();
 		
-		$t	= $api->getAccessToken( array( 'oauth_verifier' => $_GET[ 'oauth_verifier' ] ) );
+		$c	= serialize( array( 'token' => $t[ 'oauth_token' ], 'secret' => $t[ 'oauth_token_secret' ], 'user' => $t[ 'screen_name' ] ) );
 		
-		$c	= serialize( array( 'token' => $t->oauth_token, 'secret' => $t->oauth_token_secret, 'user' => $t->screen_name ) );
-		
-		setcookie( COOKIE_NAME, $c, time() + 31556926 );
+		setcookie( COOKIE_NAME, $c, COOKIE_TIME );
 		
 		$r	= true;
 		
 	break;
 	
 	case 'check_auth':
-		$r	= make_request( '/account/verify_credentials.json' );
+		$r	= $api->get( 'account/verify_credentials' );
 		
-		if ( !$r )
+		if ( isset( $r->error ) )
 		{
 			setcookie( COOKIE_NAME, '', time() - 3600 );
 		}
@@ -75,12 +77,16 @@ switch ( $_GET[ 'method' ] )
 	break;
 	
 	case 'get_favs':
-		$r	= make_request( '/favorites.json?id=' . $u . '&page=' . $_GET[ 'page' ] );
+		$r	= $api->get( 'favorites', array( 'id' => $u, 'page' => $_GET[ 'page' ] ) );
 		
 	break;
 	
 	case 'get_oauth_key':
-		$r	= $api->getAuthorizeUrl();
+		$r	= $api->getRequestToken();
+		
+		$c	= serialize( array( 'token' => $r[ 'oauth_token' ], 'secret' => $r[ 'oauth_token_secret' ] ) );
+		
+		setcookie( COOKIE_NAME, $c, COOKIE_TIME );
 	
 	break;
 }

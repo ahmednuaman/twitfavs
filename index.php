@@ -47,7 +47,7 @@
 			</div>
 			<footer>
 				<p>
-					Built by <a href="http://ahmednuaman.com/?utm_referrer=twitfavs">Ahmed Nuaman</a> in my little spare time using the awesome <a href="https://github.com/jmathai/twitter-async">epitwitter</a>. 
+					Built by <a href="http://ahmednuaman.com/?utm_referrer=twitfavs">Ahmed Nuaman</a> in my little spare time using the awesome <del><a href="https://github.com/jmathai/twitter-async">epitwitter</a></del> <a href="https://github.com/abraham/twitteroauth">twitteroauth</a>. 
 					Feel free to fork me at Github: <a href="https://github.com/ahmednuaman/twitfavs">https://github.com/ahmednuaman/twitfavs</a>.
 				</p>
 			</footer>

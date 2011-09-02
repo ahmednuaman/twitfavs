@@ -25,7 +25,8 @@ var S = {
 		
 		$.getJSON( '/backend.php', S.vars, function(d)
 		{
-			window.location.href	= 'http://' + document.domain;
+			//window.location.href	= 'http://' + document.domain;
+			S.checkAuth();
 		});
 	},
 	
@@ -50,7 +51,7 @@ var S = {
 	{
 		$.getJSON( '/backend.php', { method: 'check_auth' }, function(d)
 		{
-			if ( d )
+			if ( !d.hasOwnProperty( 'error' ) )
 			{
 				S.temp	= $( '#favs article' ).remove();
 				
@@ -296,7 +297,7 @@ var S = {
 		
 		$.getJSON( '/backend.php', { method: 'get_oauth_key' }, function(d)
 		{
-			window.location.href	= d;
+			window.location.href	= 'https://api.twitter.com/oauth/authorize?oauth_token=' + d.oauth_token;
 		});
 		
 		return false;
